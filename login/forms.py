@@ -8,7 +8,9 @@ class RegistrationForm(forms.Form):
     email = forms.EmailField(widget=forms.TextInput(attrs=dict(required=True, max_length=30)), label="email")
     password1 = forms.CharField(widget=forms.PasswordInput(attrs=dict(required=True, max_length=30, render_value=False)), label="Құпия сөз")
     password2 = forms.CharField(widget=forms.PasswordInput(attrs=dict(required=True, max_length=30, render_value=False)), label="Құпия сөз (қайтала)")
- 
+
+    first_name = forms.RegexField(regex=r'^\w+$', widget=forms.TextInput(attrs=dict(required=True, max_length=30)), label="Есімі", error_messages={ 'invalid': "Тек әріптер мен сандардан тұрады" })
+    last_name = forms.RegexField(regex=r'^\w+$', widget=forms.TextInput(attrs=dict(required=True, max_length=30)), label="Тегі", error_messages={ 'invalid': "Тек әріптер мен сандардан тұрады" })
     def clean_username(self):
         try:
             user = User.objects.get(username__iexact=self.cleaned_data['username'])
